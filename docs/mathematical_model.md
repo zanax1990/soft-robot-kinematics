@@ -24,7 +24,7 @@ For corresponding samples `Xi` and `xi`, pointwise displacement is `di = ||xi - 
 shape RMSE = sqrt(mean(di²)).
 ```
 
-Polyline arc length is the sum of consecutive segment lengths. Arc-length change is reported both in physical units and relative to the reference length. Curvature difference is the root-mean-square difference between sampled curvature fields.
+Curvature difference is the root-mean-square difference between sampled curvature fields. Polyline arc length is used only for a numerical consistency check: its relative error is measured against the prescribed physical length `L`. This error reflects discretization of a continuous inextensible centerline; it is not an extensional strain or a general deformation metric.
 
 ## Scope
 
