@@ -11,7 +11,8 @@ The code is a research scaffold for studying kinematics and shape change. All fi
 - zero, constant, and spatially varying synthetic curvature fields;
 - tangent-angle and centerline reconstruction by cumulative trapezoidal integration;
 - pointwise, mean, maximum, and endpoint displacement;
-- shape RMSE, arc-length change, and curvature RMSE;
+- shape RMSE and curvature RMSE;
+- relative polyline arc-length consistency error for numerical checking;
 - tested synthetic examples at multiple curvature amplitudes.
 
 For normalized coordinate `s` and physical length `L`, the planar model uses
@@ -29,7 +30,7 @@ The implementation assumes corresponding material points and prescribed curvatur
 
 ![Synthetic deformation metrics](figures/synthetic_metrics.png)
 
-The example evaluates a straight identity case, three constant-curvature cases, and two sinusoidal-curvature cases. Computed values are stored in [`examples/synthetic_metrics.csv`](examples/synthetic_metrics.csv). The identity case provides a basic numerical check: all displacement and curvature-difference metrics are zero.
+The example evaluates a straight identity case, three constant-curvature cases, and two sinusoidal-curvature cases. Computed values are stored in [`examples/synthetic_metrics.csv`](examples/synthetic_metrics.csv). The identity case provides a basic numerical check: all displacement and curvature-difference metrics are zero. The CSV also reports relative polyline arc-length error against the prescribed length as a discretization consistency check. It is not a measure of extension or strain.
 
 ## Installation
 
