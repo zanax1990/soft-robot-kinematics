@@ -13,6 +13,7 @@ from soft_robot_kinematics import (
     deformation_metrics,
     material_coordinate,
     reconstruct_centerline,
+    relative_arc_length_consistency_error,
     straight_centerline,
     varying_curvature,
 )
@@ -58,6 +59,7 @@ def calculate_rows(
         row: dict[str, float | str] = {"scenario": name}
         row.update(deformation_metrics(reference, shape))
         row["curvature_rmse"] = curvature_rmse(reference_curvature, curvature)
+        row["relative_arc_length_consistency_error"] = relative_arc_length_consistency_error(shape, length)
         rows.append(row)
     return rows, shapes
 
