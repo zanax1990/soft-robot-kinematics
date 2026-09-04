@@ -1,4 +1,4 @@
-"""Deformation metrics for corresponding planar centerline samples."""
+"""Geometric metrics for corresponding planar centerline samples."""
 
 from typing import TypedDict
 
@@ -14,10 +14,6 @@ class DeformationMetrics(TypedDict):
     max_displacement: float
     endpoint_displacement: float
     shape_rmse: float
-    reference_arc_length: float
-    deformed_arc_length: float
-    arc_length_change: float
-    relative_arc_length_change: float
 
 
 def _validate_points(points: ArrayLike, name: str) -> FloatArray:
@@ -33,6 +29,18 @@ def arc_length(points: ArrayLike) -> float:
     """Calculate polyline arc length."""
     array = _validate_points(points, "points")
     return float(np.linalg.norm(np.diff(array, axis=0), axis=1).sum())
+
+
+def relative_arc_length_consistency_error(points: ArrayLike, prescribed_length: float) -> float:
+    """Compare sampled polyline length with the prescribed physical length.
+
+    This is a numerical discretization check, not an extensional strain or a
+    general deformation metric. The centerline model prescribes a fixed
+    physical length and does not model axial extension.
+    """
+    if not np.isfinite(prescribed_length) or prescribed_length <= 0:
+        raise ValueError("prescribed_length must be a positive finite value")
+    return float(abs(arc_length(points) - prescribed_length) / prescribed_length)
 
 
 def pointwise_displacement(reference: ArrayLike, deformed: ArrayLike) -> FloatArray:
@@ -58,24 +66,16 @@ def curvature_rmse(reference_curvature: ArrayLike, deformed_curvature: ArrayLike
 def deformation_metrics(reference: ArrayLike, deformed: ArrayLike) -> DeformationMetrics:
     """Summarize deformation between corresponding centerline samples.
 
-    Shape RMSE is ``sqrt(mean(||x_i - X0_i||^2))``. Arc-length change is
-    signed: positive values indicate an increase in sampled polyline length.
+    Shape RMSE is ``sqrt(mean(||x_i - X0_i||^2))``. Arc-length differences
+    are intentionally excluded because the model does not represent axial
+    extension.
     """
     reference_array = _validate_points(reference, "reference")
     deformed_array = _validate_points(deformed, "deformed")
     displacement = pointwise_displacement(reference_array, deformed_array)
-    reference_length = arc_length(reference_array)
-    deformed_length = arc_length(deformed_array)
-    length_change = deformed_length - reference_length
-    relative_change = length_change / reference_length if reference_length > 0 else np.nan
-
     return {
         "mean_displacement": float(displacement.mean()),
         "max_displacement": float(displacement.max()),
         "endpoint_displacement": float(displacement[-1]),
         "shape_rmse": float(np.sqrt(np.mean(np.square(displacement)))),
-        "reference_arc_length": reference_length,
-        "deformed_arc_length": deformed_length,
-        "arc_length_change": float(length_change),
-        "relative_arc_length_change": float(relative_change),
     }
