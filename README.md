@@ -4,11 +4,11 @@ This repository implements a compact, reproducible model for planar soft-robot c
 
 The code is a research scaffold for studying kinematics and shape change. All figures and numerical outputs included here are generated from synthetic curvature fields; they are not experimental validation.
 
-## Visual motivation
+## Visual Motivation
 
-![Soft robotic structure undergoing deformation](media/soft_robot_deformation_preview.svg)
+[![Soft robotic structure undergoing time-varying deformation](media/soft_robot_deformation_preview.gif)](media/soft_robot_deformation.mp4)
 
-*Visual example of large, time-varying deformation in a soft robotic structure. This preview is included as motivation for geometric shape modeling and is not experimental validation of the current implementation.*
+*Visual example of large, time-varying deformation in a soft robotic structure. This video is included as motivation for geometric shape modeling and is not experimental validation of the current implementation.*
 
 ## Current implementation
 
@@ -83,6 +83,7 @@ The tests cover array dimensions, finite outputs, zero-curvature reconstruction,
 ├── examples/                   # synthetic experiment and computed metrics
 ├── tests/                      # unit tests
 ├── figures/                    # generated synthetic figures
+├── media/                      # deformation video and preview
 ├── docs/                       # model definition and assumptions
 └── .github/workflows/          # continuous integration
 ```
