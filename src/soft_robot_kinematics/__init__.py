@@ -7,7 +7,12 @@ from .geometry import (
     straight_centerline,
     varying_curvature,
 )
-from .metrics import arc_length, curvature_rmse, deformation_metrics
+from .metrics import (
+    arc_length,
+    curvature_rmse,
+    deformation_metrics,
+    relative_arc_length_consistency_error,
+)
 
 __all__ = [
     "arc_length",
@@ -16,6 +21,7 @@ __all__ = [
     "deformation_metrics",
     "material_coordinate",
     "reconstruct_centerline",
+    "relative_arc_length_consistency_error",
     "straight_centerline",
     "varying_curvature",
 ]
